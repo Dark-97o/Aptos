@@ -36,10 +36,14 @@ module StakeToEarn::staking {
     }
 
     public fun claim_rewards(account: &signer) {
-        let staker = borrow_global_mut<Staker>(signer::address_of(account));
+        let staker_address = signer::address_of(account);
+        let staker = borrow_global_mut<Staker>(staker_address);
+        assert!(staker.amount > 0, "No staked amount to claim rewards.");
+
         let elapsed_time = timestamp::now() - staker.last_claim_time;
-        let rewards = elapsed_time * staker.amount * (100 / 100);
+        let rewards = (elapsed_time / 86400) * staker.amount * (100 / 100);
         coin::transfer(account, signer::address_of(account), rewards);
         staker.last_claim_time = timestamp::now();
+
     }
 }

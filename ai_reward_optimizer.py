@@ -7,9 +7,16 @@ class AIRewardOptimizer:
         self.volatility_factor = volatility_factor
 
     def get_market_conditions(self):
-        staking_volume = random.uniform(5000, 20000) 
-        volatility = random.uniform(0.05, 0.3)
+        staking_volume = self.fetch_staking_volume()  
+        volatility = self.fetch_volatility()  
         return staking_volume, volatility
+
+    def fetch_staking_volume(self):
+        return 10000
+
+    def fetch_volatility(self):
+        return 0.1 
+
 
     def calculate_dynamic_reward(self, user_stake, staking_duration):
         staking_volume, volatility = self.get_market_conditions()

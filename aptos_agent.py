@@ -2,9 +2,8 @@ import requests
 import time
 from ai_reward_optimizer import AIRewardOptimizer
 
-APTOS_NODE = "https://fullnode.testnet.aptoslabs.com"
-SMART_CONTRACT_ADDRESS = "0xACTUAL_CONTRACT_ADDRESS"  #contract address
-
+APTOS_NODE = "https://fullnode.mainnet.aptoslabs.com" 
+SMART_CONTRACT_ADDRESS = "0xYOUR_ACTUAL_CONTRACT_ADDRESS"  #contract address
 
 class AptosAgent:
     def __init__(self):
@@ -21,7 +20,6 @@ class AptosAgent:
         for staker in stakers:
             user_stake = staker.get("amount", 0)
             staking_duration = (time.time() - staker.get("stake_time", time.time())) / 86400
-            
             optimized_reward = self.optimizer.calculate_dynamic_reward(user_stake, staking_duration)
             self.send_reward_transaction(staker["address"], optimized_reward)
 
@@ -45,4 +43,4 @@ if __name__ == "__main__":
             time.sleep(3600) 
         except Exception as e:
             print(f"Error updating rewards: {e}") 
-            time.sleep(60) 
+            time.sleep(60)
